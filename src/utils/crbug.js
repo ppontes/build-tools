@@ -60,7 +60,7 @@ async function getCveForBugNr(bugNr) {
     const bugInfo = await getBugInfo(bugNr);
     const cve = bugInfo.issue.labelRefs.find(l => /^CVE-/.test(l.label));
 
-    return cve.label;
+    return cve?.label;
   } catch (error) {
     console.log(color.err, error);
   }
