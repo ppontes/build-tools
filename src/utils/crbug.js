@@ -6,7 +6,7 @@ const BASE_URL = 'https://bugs.chromium.org';
 const GET_ISSUE = '/prpc/monorail.Issues/GetIssue';
 
 async function getChromeCookies(url) {
-  const cookies = await chrome.getCookiesPromised(url);
+  const cookies = await chrome.getCookiesPromised(url, null, 'Profile 1');
 
   return cookies;
 }
