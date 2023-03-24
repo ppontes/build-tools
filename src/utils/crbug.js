@@ -1,3 +1,4 @@
+const d = require('debug')('build-tools:cherry-pick');
 const fetch = require('node-fetch');
 const chrome = require('chrome-cookies-secure');
 const { color } = require('./logging');
@@ -27,6 +28,7 @@ async function getXsrfToken(cookies) {
 async function getBugInfo(bugNr) {
   const cookies = await getChromeCookies(BASE_URL);
   const xsrfToken = await getXsrfToken(cookies);
+  d(`Extracted bug nr.: ${bugNr}`);
 
   const options = {
     issueRef: {
@@ -45,7 +47,10 @@ async function getBugInfo(bugNr) {
     method: 'POST',
   })
     .then(j => j.text())
-    .then(t => JSON.parse(t.substr(4)));
+    .then(t => {
+      d(`Bug description: ${t}`);
+      return JSON.parse(t.substr(4));
+    });
 
   return result;
 }
